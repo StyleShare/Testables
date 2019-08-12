@@ -26,15 +26,15 @@ XCTAssertEqual(user.fullName, "Suyeol Jeon")
 
 ## Testables
 
-Testables provides a generic way to expose private properties using Swift KeyPath.
+Testables provides a generic way to expose private properties using UnsafeMutablePointer.
 
 Add the lines below to User.swift:
 
 ```swift
 // User.swift
 extension Testables where Base: User {
-  static var firstName: ReadWrite<String> { \.firstName }
-  static var lastName: ReadWrite<String> { \.lastName }
+  static var firstName: Testable<String> { &base.firstName + 0 }
+  static var lastName: Testable<String> { &base.lastName + 0 }
 }
 ```
 
@@ -43,28 +43,8 @@ And update the test code with:
 ```swift
 // UserTests.swift
 let user = User()
-user.testable[.firstName] = "Suyeol"
-user.tesatble[.lastName] = "Jeon"
-XCTAssertEqual(user.fullName, "Suyeol Jeon")
-```
-
-## Alternative Approaches
-
-Using UnsafeMutablePointer ([`pointer`](https://github.com/devxoul/Testables/tree/pointer) branch):
-
-```swift
-typealias Testable = UnsafeMutablePointer
-
-// User.swift
-extension Testables where Base: User {
-  var firstName: Testable<String> { &self.base.firstName + 0 }
-  var lastName: Testable<String> { &self.base.lastName + 0 }
-}
-
-// UserTests.swift
-let user = User()
-user.testable.firstName.pointee = "Suyeol"
-user.tesatble.lastName.pointee = "Jeon"
+user.testable.firstName.value = "Suyeol"
+user.tesatble.lastName.value = "Jeon"
 XCTAssertEqual(user.fullName, "Suyeol Jeon")
 ```
 
