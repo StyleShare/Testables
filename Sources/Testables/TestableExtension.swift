@@ -1,16 +1,24 @@
-public protocol TestableExtension {
+public protocol TestablesProtocol {
   associatedtype Base
 
-  static var testable: Testables<Base>.Type { get }
-  var testable: Testables<Base> { get }
+  var base: Base { get }
+  init(base: Base)
+}
+
+open class Of<Base>: TestablesProtocol {
+  public let base: Base
+
+  public required init(base: Base) {
+    self.base = base
+  }
+}
+
+public protocol TestableExtension {
+  associatedtype Testables: TestablesProtocol where Testables.Base == Self
 }
 
 public extension TestableExtension {
-  static var testable: Testables<Self>.Type {
-    return Testables.self
-  }
-
-  var testable: Testables<Self> {
-    return Testables(base: self)
+  var testable: Testables {
+    return Testables.init(base: self)
   }
 }

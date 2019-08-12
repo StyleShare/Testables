@@ -1,8 +1,8 @@
 import Testables
 
 public class User: TestableExtension {
-  fileprivate var firstName: String
-  fileprivate var lastName: String
+  private var firstName: String
+  private var lastName: String
 
   public init() {
     self.firstName = ""
@@ -14,12 +14,9 @@ public class User: TestableExtension {
   }
 }
 
-public extension Testables where Base: User {
-#if swift(>=5.1)
-  var firstName: Testable<String> { &base.firstName + 0 }
-  var lastName: Testable<String> { &base.lastName + 0 }
-#else
-  var firstName: Testable<String> { return &base.firstName + 0 }
-  var lastName: Testable<String> { return &base.lastName + 0 }
-#endif
+public extension User {
+  final class Testables: Of<User> {
+    public lazy var firstName = Testable(&base.firstName)
+    public lazy var lastName = Testable(&base.lastName)
+  }
 }
