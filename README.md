@@ -50,7 +50,7 @@ XCTAssertEqual(user.fullName, "Suyeol Jeon")
 
 ## Alternative Approaches
 
-Using UnsafeMutablePointer:
+Using UnsafeMutablePointer ([`pointer`](https://github.com/devxoul/Testables/tree/pointer) branch):
 
 ```swift
 typealias Testable = UnsafeMutablePointer
