@@ -9,8 +9,8 @@ Let's assume that we have a class named `User`. This class has a property `fullN
 ```swift
 // User.swift
 class User {
-  fileprivate var firstName: String
-  fileprivate var lastName: String
+  private var firstName: String
+  private var lastName: String
 
   var fullName: String {
     return "\(self.firstName) \(self.lastName)"
@@ -32,9 +32,11 @@ Add the lines below to User.swift:
 
 ```swift
 // User.swift
-extension Testables where Base: User {
-  static var firstName: Testable<String> { &base.firstName + 0 }
-  static var lastName: Testable<String> { &base.lastName + 0 }
+extension User {
+  final class Testables: Of<User> {
+    lazy var firstName = Testable(&base.firstName)
+    lazy var lastName = Testable(&base.lastName)
+  }
 }
 ```
 
