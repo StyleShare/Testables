@@ -1,15 +1,7 @@
-public typealias Testables = PartialKeyPath
+public final class Testables<Base> {
+  public var base: Base
 
-public extension Testables {
-  typealias Base = Root
-}
-
-public extension Testables {
-#if swift(>=5.1)
-  typealias ReadOnly<Value> = KeyPath<Root, Value>
-  typealias ReadWrite<Value> = WritableKeyPath<Root, Value>
-#else
-  typealias ReadOnly = KeyPath
-  typealias ReadWrite = WritableKeyPath
-#endif
+  init(base: Base) {
+    self.base = base
+  }
 }

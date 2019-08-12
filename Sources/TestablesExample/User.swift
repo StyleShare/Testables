@@ -16,10 +16,10 @@ public class User: TestableExtension {
 
 public extension Testables where Base: User {
 #if swift(>=5.1)
-  static var firstName: ReadWrite<String> { \.firstName }
-  static var lastName: ReadWrite<String> { \.lastName }
+  var firstName: Testable<String> { &base.firstName + 0 }
+  var lastName: Testable<String> { &base.lastName + 0 }
 #else
-  static var firstName: ReadWrite<User, String> { return \.firstName }
-  static var lastName: ReadWrite<User, String> { return \.lastName }
+  var firstName: Testable<String> { return &base.firstName + 0 }
+  var lastName: Testable<String> { return &base.lastName + 0 }
 #endif
 }
