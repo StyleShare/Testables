@@ -4,48 +4,47 @@ Make private properties testable. Be aware of using this project since it is ver
 
 ## Background
 
-Let's assume that we have a class named `User`. This class has a property `fullName` which depends on `firstName` and `lastName`. The property `fullName` cannot be easily tested because `firstName` and `lastName` are declared as private. And we don't want to make those property public.
+Let's assume that there is a class named `ProfileViewController`. This class has a property `username` which sets `usernameLabel.text` when the new value is assigned. Unfortunately, we cannot write an unit test because `usernameLabel` is a private property.
 
 ```swift
-// User.swift
-class User {
-  fileprivate var firstName: String
-  fileprivate var lastName: String
-
-  var fullName: String {
-    return "\(self.firstName) \(self.lastName)"
+// ProfileViewController.swift
+class ProfileViewController {
+  var username: String? {
+    didSet {
+      self.usernameLabel.text = self.username
+    }
   }
+  private let usernameLabel = UILabel()
 }
 
-// UserTests.swift
-let user = User()
-user.firstName = "Suyeol" // ⚠️ private
-user.lastName = "Jeon" // ⚠️ private
-XCTAssertEqual(user.fullName, "Suyeol Jeon")
+// ProfileViewControllerTests.swift
+viewController.username = "devxoul"
+let usernameLabel = viewController.usernameLabel // 🚫 private
+XCTAssertEqual(usernameLabel.text, "devxoul")
 ```
 
-## Testables
+## Solution
 
 Testables provides a generic way to expose private properties using Swift KeyPath.
 
 Add the lines below to User.swift:
 
 ```swift
-// User.swift
-extension Testables where Base: User {
-  static var firstName: ReadWrite<String> { \.firstName }
-  static var lastName: ReadWrite<String> { \.lastName }
+// ProfileViewController.swift
+extension ProfileViewController: Testable {
+  final class TestableKeys: TestableKey<Self> {
+    let usernameLabel = \Self.usernameLabel
+  }
 }
 ```
 
-And update the test code with:
+And update the test code:
 
 ```swift
-// UserTests.swift
-let user = User()
-user.testable[.firstName] = "Suyeol"
-user.tesatble[.lastName] = "Jeon"
-XCTAssertEqual(user.fullName, "Suyeol Jeon")
+// ProfileViewControllerTests.swift
+viewController.username = "devxoul"
+let usernameLabel = viewController.testable[\.usernameLabel] // ✅
+XCTAssertEqual(usernameLabel.text, "devxoul")
 ```
 
 ## License
