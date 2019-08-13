@@ -37,11 +37,15 @@ Testables provides a generic way to expose private properties using Swift KeyPat
 Add the lines below to ProfileViewController.swift:
 
 ```swift
+#if DEBUG
+import Testables
+
 extension ProfileViewController: Testable {
   final class TestableKeys: TestableKey<Self> {
     let usernameLabel = \Self.usernameLabel
   }
 }
+#endif
 ```
 
 And update the test code:
