@@ -20,7 +20,7 @@ class ProfileViewController {
 }
 
 extension ProfileViewController: Testable {
-  class TestableKeys: TestableKey<Self> {
+  final class TestableKeys: TestableKey<Self> {
     let usernameLabel = \Self.usernameLabel
     let followButton = \Self.followButton
     let isFollowing = \Self.isFollowing
