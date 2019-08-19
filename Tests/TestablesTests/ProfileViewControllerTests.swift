@@ -15,17 +15,17 @@ final class ProfileViewControllerTests: XCTestCase {
     self.viewController.username = "devxoul"
 
     // then
-    let usernameLabel = self.viewController.testable[\.usernameLabel]
+    let usernameLabel = self.viewController.testables[\.usernameLabel]
     XCTAssertEqual(usernameLabel.text, "devxoul")
   }
 
   func testFollowButton_isSelected() {
     // when
-    self.viewController.testable[\.isFollowing] = true
+    self.viewController.testables[\.isFollowing] = true
 
     // then
-    let followButton = self.viewController.testable[\.followButton]
+    let followButton = self.viewController.testables[\.followButton]
     XCTAssertTrue(followButton.isSelected)
-    XCTAssertTrue(self.viewController.testable[\.isFollowing])
+    XCTAssertTrue(self.viewController.testables[\.isFollowing])
   }
 }
