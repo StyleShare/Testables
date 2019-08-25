@@ -55,7 +55,7 @@ And update the test code:
 viewController.username = "devxoul"
 
 // then
-let usernameLabel = viewController.testable[\.usernameLabel] // ✅
+let usernameLabel = viewController.testables[\.usernameLabel] // ✅
 XCTAssertEqual(usernameLabel.text, "devxoul")
 ```
 

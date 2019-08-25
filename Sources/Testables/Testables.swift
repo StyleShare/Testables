@@ -4,7 +4,7 @@ public protocol Testable {
 }
 
 public extension Testable {
-  var testable: TestableKeys {
+  var testables: TestableKeys {
     return TestableKeys.init(base: self)
   }
 }
