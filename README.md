@@ -1,5 +1,8 @@
 # Testables
 
+[![CocoaPods](http://img.shields.io/cocoapods/v/Testables.svg)](https://cocoapods.org/pods/Testables)
+[![CI](https://github.com/StyleShare/Testables/workflows/CI/badge.svg)](https://github.com/StyleShare/Testables/actions)
+
 Make private properties testable.
 
 ## Background
