@@ -1,6 +1,6 @@
 # Testables
 
-Make private properties testable. Be aware of using this project since it is very conceptual.
+Make private properties testable.
 
 ## Background
 
